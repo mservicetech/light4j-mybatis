@@ -1,0 +1,7 @@
+H2DataSource:
+  DriverClassName: org.h2.jdbcx.JdbcDataSource
+  jdbcUrl: jdbc:h2:mem:testdb;INIT=runscript from 'classpath:scripts/schema.sql'\;runscript from 'classpath:scripts/data.sql';
+  username: sa
+  password: sa
+  maximumPoolSize: 10
+  connectionTimeout: 500

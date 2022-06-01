@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- mybatis TransactionDao mapper configuration -->
+<mapper namespace="com.mservicetech.campsite.mapper.CampsiteMapper">
+
+    <!-- mapping between table columns and object fields -->
+    <resultMap id="clientResult" type="com.mservicetech.campsite.model.Client">
+        <result property="id" column="id"/>
+        <result property="name" column="full_name"/>
+        <result property="email" column="email"/>
+    </resultMap>
+
+    <resultMap id="reservationResult" type="com.mservicetech.campsite.model.Reservation">
+        <result property="id" column="id"/>
+        <result property="arrival" column="arrival_date"/>
+        <result property="departure" column="departure_date"/>
+        <association property="client" javaType="com.mservicetech.campsite.model.Client">
+            <result property="id" column="client_id"></result>
+            <result property="name" column="full_name"></result>
+            <result property="email" column="email"></result>
+        </association>
+    </resultMap>
+
+
+    <select id="findReserved" resultType="java.time.LocalDate" fetchSize="256" flushCache="false" useCache="true" timeout="60000" statementType="PREPARED" resultSetType="FORWARD_ONLY">
+        SELECT reserved_date FROM reserved
+    </select>
+
+    <!-- flushCache to db configuration -->
+    <insert id="insertReserved" parameterType="java.time.LocalDate" flushCache="false">
+        INSERT INTO reserved(reserved_date)
+        VALUES (#{reserved})
+    </insert>
+
+    <insert id="insertClient" parameterType="com.mservicetech.campsite.model.Client" flushCache="true" useGeneratedKeys="true" keyProperty="id" keyColumn="ID">
+        INSERT INTO client(full_name, email )
+        VALUES (#{name}, #{email})
+    </insert>
+
+    <select id="getClientByEmail" resultMap="clientResult" flushCache="false" useCache="true" statementType="PREPARED" resultSetType="FORWARD_ONLY">
+        SELECT id, full_name, email FROM client WHERE email=#{email}
+    </select>
+
+    <select id="verifyReservedDates" resultType="java.time.LocalDate" parameterType="java.time.LocalDate" flushCache="false" useCache="true" statementType="PREPARED">
+        SELECT reserved_date  FROM reserved
+        <where>
+            <foreach item="item" index="index" collection="list"
+                     open="reserved_date in (" separator="," close=")" nullable="true">
+                #{item}
+            </foreach>
+        </where>
+    </select>
+
+    <delete id = "deleteReservedDates" parameterType = "java.time.LocalDate">
+        DELETE FROM reserved WHERE reserved_date = #{reserved_date};
+    </delete>
+
+    <update id = "deleteReservation" parameterType = "String">
+        UPDATE reservation SET status = 'Inactive' WHERE id =#{id}
+    </update>
+
+    <update id = "updateReservation" parameterType = "com.mservicetech.campsite.model.Reservation">
+        UPDATE reservation SET arrival_date= #{arrival} , departure_date= #{departure} WHERE id = #{id}
+    </update>
+
+    <select id="getReservation" resultMap="reservationResult"  parameterType="String" flushCache="false" useCache="true" statementType="PREPARED" resultSetType="FORWARD_ONLY">
+        SELECT r.id as id, client_id, arrival_date, departure_date, full_name, email
+          FROM reservation r JOIN client c ON c.id = r.client_id
+          WHERE r.id = #{id} AND status = 'Active';
+    </select>
+
+    <insert id="insertReservation" parameterType="com.mservicetech.campsite.model.Reservation" flushCache="true">
+        INSERT INTO reservation(id, client_Id, arrival_date, departure_date )
+        VALUES (#{id}, #{client.id}, #{arrival}, #{departure}),
+    </insert>
+</mapper>

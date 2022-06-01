@@ -1,0 +1,3 @@
+registerAliases: ${mybatis.registerAliases:com.mservicetech.mybatis.model}
+mapperPackage: ${mybatis.mapperPackage:com.mservicetech.mybatis.mapper}
+

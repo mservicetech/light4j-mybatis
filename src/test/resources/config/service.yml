@@ -1,0 +1,24 @@
+
+# Singleton service factory configuration/IoC injection
+singletons:
+
+  - com.networknt.decrypt.Decryptor:
+      - com.networknt.decrypt.AESDecryptor
+  - com.networknt.db.GenericDataSource:
+      - com.networknt.db.H2DataSource:
+          - java.lang.String: H2DataSource
+  - com.mservicetech.campsite.repository.CampsiteRepository:
+      - com.mservicetech.campsite.repository.CampsiteRepositoryImpl
+
+  # StartupHookProvider implementations, there are one to many and they are called in the same sequence defined.
+  - com.networknt.server.StartupHookProvider:
+    - com.mservicetech.mybatis.startup.H2DatasourceStartupHook
+    - com.mservicetech.mybatis.startup.MybatisStartupHookProvider
+
+  # ShutdownHookProvider implementations, there are one to many and they are called in the same sequence defined.
+  - com.networknt.server.ShutdownHookProvider:
+
+  
+
+
+

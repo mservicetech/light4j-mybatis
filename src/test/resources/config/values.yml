@@ -1,0 +1,8 @@
+
+# environment tag that will be registered on consul to support multiple instances per env for testing.
+# https://github.com/networknt/light-doc/blob/master/docs/content/design/env-segregation.md
+# This tag should only be set for testing env, not production. The production certification process will enforce it.
+server.environment: dev
+
+mybatis.registerAliases: com.mservicetech.campsite.model
+mybatis.mapperPackage: com.mservicetech.campsite.mapper

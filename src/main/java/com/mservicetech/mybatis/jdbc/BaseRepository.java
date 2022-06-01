@@ -17,7 +17,7 @@ public abstract class BaseRepository {
 
     protected void SqlSessionFactoryConfig(DataSource dataSource) {
         TransactionFactory transactionFactory = new JdbcTransactionFactory();
-        Environment env = new Environment(serverConfig.getEnvironment(), transactionFactory, dataSource);
+        Environment env = new Environment(serverConfig.getEnvironment()==null ? "test" : serverConfig.getEnvironment(), transactionFactory, dataSource);
         Configuration configuration = new Configuration(env);
 
         sqlSessionFactory = new SqlSessionFactoryBuilder().build(configuration);

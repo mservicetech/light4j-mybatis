@@ -2,18 +2,16 @@ package com.mservicetech.campsite.repository;
 
 import com.mservicetech.campsite.mapper.CampsiteMapper;
 import com.mservicetech.campsite.model.Client;
-import com.mservicetech.mybatis.jdbc.BaseRepository;
+import com.mservicetech.mybatis.base.SimpleaBaseRepository;
 import com.networknt.db.GenericDataSource;
 import org.apache.ibatis.session.SqlSession;
 
-import java.sql.SQLException;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
-public class CampsiteRepositoryImpl extends BaseRepository implements CampsiteRepository{
+public class CampsiteRepositoryImplSimplea extends SimpleaBaseRepository implements CampsiteRepository{
 
-    public CampsiteRepositoryImpl(GenericDataSource genericDataSource) {
+    public CampsiteRepositoryImplSimplea(GenericDataSource genericDataSource) {
         SqlSessionFactoryConfig(genericDataSource.getDataSource());
         sqlSessionFactory.getConfiguration().getTypeAliasRegistry().registerAliases(mybatisConfig.getRegisterAliases());
         sqlSessionFactory.getConfiguration().addMappers(mybatisConfig.getMapperPackage());

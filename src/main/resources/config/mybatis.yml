@@ -1,3 +1,10 @@
 registerAliases: ${mybatis.registerAliases:com.mservicetech.mybatis.model}
 mapperPackage: ${mybatis.mapperPackage:com.mservicetech.mybatis.mapper}
+## name Alias map
+nameAliases: ${mybatis.nameAliases:-}
+## result map: result name : <resultMap>
+resultMappings: ${mybatis.resultMappings:-}
+## sql Source  map
+# sql name: query body
+sqlSource: ${mybatis.sqlSource:-}
 

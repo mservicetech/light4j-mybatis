@@ -1,6 +1,5 @@
 package com.mservicetech.mybatis;
 
-import com.networknt.config.Config;
 import com.networknt.server.Server;
 import com.networknt.server.ServerConfig;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -8,7 +7,7 @@ import org.apache.ibatis.session.SqlSessionFactory;
 public interface MybatisSessionManager {
 
      ServerConfig serverConfig = Server.getServerConfig();
-     MybatisConfig mybatisConfig = (MybatisConfig) Config.getInstance().getJsonObjectConfig(MybatisConfig.CONFIG_NAME, MybatisConfig.class);
+     MybatisConfig mybatisConfig = MybatisConfig.load();
 
 
      enum SessionMode {

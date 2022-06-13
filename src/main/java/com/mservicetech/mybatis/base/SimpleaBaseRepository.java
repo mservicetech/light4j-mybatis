@@ -1,4 +1,4 @@
-package com.mservicetech.mybatis.common;
+package com.mservicetech.mybatis.base;
 
 import com.networknt.server.Server;
 import com.networknt.server.ServerConfig;

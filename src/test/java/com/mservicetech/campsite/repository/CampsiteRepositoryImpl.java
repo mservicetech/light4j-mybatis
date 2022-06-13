@@ -9,9 +9,9 @@ import org.apache.ibatis.session.SqlSession;
 import java.time.LocalDate;
 import java.util.List;
 
-public class CampsiteRepositoryImplSimplea extends SimpleaBaseRepository implements CampsiteRepository{
+public class CampsiteRepositoryImpl extends SimpleaBaseRepository implements CampsiteRepository{
 
-    public CampsiteRepositoryImplSimplea(GenericDataSource genericDataSource) {
+    public CampsiteRepositoryImpl(GenericDataSource genericDataSource) {
         SqlSessionFactoryConfig(genericDataSource.getDataSource());
         sqlSessionFactory.getConfiguration().getTypeAliasRegistry().registerAliases(mybatisConfig.getRegisterAliases());
         sqlSessionFactory.getConfiguration().addMappers(mybatisConfig.getMapperPackage());

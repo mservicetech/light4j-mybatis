@@ -1,4 +1,4 @@
-package com.mservicetech.mybatis.jdbc;
+package com.mservicetech.mybatis.base;
 
 import com.networknt.server.Server;
 import com.networknt.server.ServerConfig;
@@ -11,7 +11,7 @@ import org.apache.ibatis.transaction.jdbc.JdbcTransactionFactory;
 
 import javax.sql.DataSource;
 
-public abstract class BaseRepository {
+public abstract class SimpleBaseRepository {
     protected SqlSessionFactory sqlSessionFactory;
     public static final ServerConfig serverConfig = Server.getServerConfig();
 

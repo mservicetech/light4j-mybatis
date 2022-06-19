@@ -1,6 +1,6 @@
 ## light4j-mybatis
 
-Common components for using mybatis db access in light-4j framework. 
+Common components for using mybatis in light-4j framework. 
 
 ### Usage by using mybatis XML base config
 

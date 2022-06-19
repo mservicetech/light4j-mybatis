@@ -11,7 +11,7 @@ import org.apache.ibatis.transaction.jdbc.JdbcTransactionFactory;
 
 import javax.sql.DataSource;
 
-public abstract class SimpleaBaseRepository {
+public abstract class SimpleBaseRepository {
     protected SqlSessionFactory sqlSessionFactory;
     public static final ServerConfig serverConfig = Server.getServerConfig();
 

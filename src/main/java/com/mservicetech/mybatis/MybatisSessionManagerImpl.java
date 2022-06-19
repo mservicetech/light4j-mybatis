@@ -17,7 +17,7 @@ import java.util.*;
 
 public class MybatisSessionManagerImpl implements MybatisSessionManager{
 
-    private static final Logger logger = LoggerFactory.getLogger(SqlSessionFactoryBean.class);
+    private static final Logger logger = LoggerFactory.getLogger(MybatisSessionManager.class);
 
     public SqlSessionFactory sqlSessionFactory;
 
@@ -48,7 +48,7 @@ public class MybatisSessionManagerImpl implements MybatisSessionManager{
         });
         Optional.ofNullable(mybatisConfig.getResultMappings()).ifPresent(m->{
             // add result mapping to default namespace
-            //new
+            new ResultMapBuilder(configuration).addResultMapping(m, mappers);
         });
         sqlSessionFactory = new SqlSessionFactoryBuilder().build(configuration);
         logger.info("Mybatis session manager created.");
@@ -63,9 +63,9 @@ public class MybatisSessionManagerImpl implements MybatisSessionManager{
      * This method will make sure all database process in the method call will use same sql session.
      * And the session will be committed or rollbacked in same transaction.
      *
-     * @param <T>
+     * @param <T></T> SessionTask
      * @param mode SessionMode
-     * @return <T>
+     * @return
      */
     @Override
     public <T> T executeWithSession(SessionTask<T> task, SessionMode mode) {

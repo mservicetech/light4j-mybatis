@@ -2,11 +2,11 @@
 
 Common components for using mybatis db access in light-4j framework. 
 
-### Usage
+### Usage by using mybatis XML base config
 
 There three solution for the light4j integration:
 
-- Define Repository class and extend the BaseRepository class (Please refer the sample and test cases in the test package)
+- Define Repository class and extend the SimpleBaseRepository class (Please refer the sample and test cases in the test package)
 
 ```
   - com.networknt.db.GenericDataSource:
@@ -25,6 +25,17 @@ There three solution for the light4j integration:
 
 The MybatisStartupHookProvider will initial the SqlSessionFactory at service startup time, and it can be use in the DAO/Service class directly (MybatisStartupHookProvider.sqlSessionFactory)
 
+- Using MybatisSessionManager by extend BaseRepository class:
+
+define the MybatisSessionManager in the service.yml (or values.yml)
+
+```
+  - com.mservicetech.mybatis.MybatisSessionManager:
+      - com.mservicetech.mybatis.MybatisSessionManagerImpl
+  - com.mservicetech.campsite.repository.CampsiteRepository:
+      - com.mservicetech.campsite.repository.CampsiteRepositoryImpl
+```
+
 
 - Using SqlSessionFactoryBean
 
@@ -38,3 +49,8 @@ Config file mybatis.yml defines config values for model package and mapper packa
 mybatis.registerAliases: com.mservicetech.campsite.model
 mybatis.mapperPackage: com.mservicetech.campsite.mapper
 ```
+
+
+### Usage by using light4j yaml format config
+
+//TODO

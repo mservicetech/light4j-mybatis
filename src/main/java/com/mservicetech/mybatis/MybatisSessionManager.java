@@ -4,6 +4,11 @@ import com.networknt.server.Server;
 import com.networknt.server.ServerConfig;
 import org.apache.ibatis.session.SqlSessionFactory;
 
+/**
+ * Session Management interface
+ * It provide  interface methods for mybatis session management
+ *
+ */
 public interface MybatisSessionManager {
 
      ServerConfig serverConfig = Server.getServerConfig();

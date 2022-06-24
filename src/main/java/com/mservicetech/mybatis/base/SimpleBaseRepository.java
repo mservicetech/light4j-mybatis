@@ -11,6 +11,12 @@ import org.apache.ibatis.transaction.jdbc.JdbcTransactionFactory;
 
 import javax.sql.DataSource;
 
+/**
+ * This is a simple Base Repository(DAO) class which provide general config and setting for mybatis
+ * User can use this base class to use mybatis as traditional way
+ *
+ * @author Gavin Chen
+ */
 public abstract class SimpleBaseRepository {
     protected SqlSessionFactory sqlSessionFactory;
     public static final ServerConfig serverConfig = Server.getServerConfig();

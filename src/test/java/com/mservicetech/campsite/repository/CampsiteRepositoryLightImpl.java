@@ -7,6 +7,7 @@ import com.mservicetech.mybatis.base.BaseRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.sql.Date;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -22,7 +23,6 @@ public class CampsiteRepositoryLightImpl extends BaseRepository implements Camps
 
     @Override
     public List<LocalDate> findReserved()  {
-       // return executeWithSession(session -> session.getMapper(CampsiteLightMapper.class).getReservedDates());
         return executeWithSession(session -> session.getMapper(CampsiteLightMapper.class).getReservedDates().stream()
                 .map(v->v.toLocalDate()).collect(Collectors.toList())
         );
@@ -32,7 +32,7 @@ public class CampsiteRepositoryLightImpl extends BaseRepository implements Camps
     public int reserveDates(List<LocalDate> dateList) {
         return executeWithSession(session -> {
             CampsiteLightMapper mapper = session.getMapper(CampsiteLightMapper.class);
-            dateList.forEach(i -> mapper.insertReservedDate(i));
+            dateList.forEach(i -> mapper.insertReservedDate(Date.valueOf(i)));
             return dateList.size();
         });
     }
@@ -41,15 +41,16 @@ public class CampsiteRepositoryLightImpl extends BaseRepository implements Camps
     public int deleteDates(List<LocalDate> dateList) {
         return executeWithSession(session -> {
             CampsiteLightMapper mapper = session.getMapper(CampsiteLightMapper.class);
-            return  mapper.deleteReservedDates(dateList);
+            return  mapper.deleteReservedDates(dateList.stream().map(r->Date.valueOf(r)).collect(Collectors.toList()));
         });
     }
 
     @Override
     public List<LocalDate> verifyDates(List<LocalDate> dateList) {
         return executeWithSession(session -> {
+            List<Date> dates = dateList.stream().map(d->Date.valueOf(d)).collect(Collectors.toList());
             CampsiteLightMapper mapper = session.getMapper(CampsiteLightMapper.class);
-            return  mapper.verifyReserveDates(dateList);
+            return  mapper.verifyReserveDates(dates).stream().map(v->v.toLocalDate()).collect(Collectors.toList());
         });
     }
 

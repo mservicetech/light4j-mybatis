@@ -14,7 +14,7 @@ public interface CampsiteLightMapper {
     @Select("SELECT reserved_date from reserved")
     List<Date> getReservedDates();
 
-    @Insert("INSERT INTO CLIENT (FULL_NAME, EMAIL) VALUES (#{name}, #{email})")
+    @Insert("INSERT INTO client (full_name, email) VALUES (#{name}, #{email})")
     @Options(useGeneratedKeys = true, keyColumn = "id")
     int insertClient(Client client);
 
@@ -27,13 +27,13 @@ public interface CampsiteLightMapper {
     Client selectClientById(Long id);
 
     @SelectProvider
-    List<LocalDate> verifyReserveDates(@Param("items") List<LocalDate> dates);
+    List<Date> verifyReserveDates(@Param("items") List<Date> dates);
 
     @Insert("INSERT INTO reserved(reserved_date) VALUES (#{date})")
-    void insertReservedDate(LocalDate date);
+    void insertReservedDate(Date date);
 
     @DeleteProvider
-    int deleteReservedDates(@Param("items") List<LocalDate> dates);
+    int deleteReservedDates(@Param("items") List<Date> dates);
 
     @InsertProvider
     int insertReservation(@Param("id") String id,  @Param("client_id") Long client_id, @Param("arrivalDate") LocalDate arrivalDate, @Param("departureDate") LocalDate departureDate);

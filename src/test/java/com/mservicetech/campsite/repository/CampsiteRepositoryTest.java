@@ -2,6 +2,7 @@ package com.mservicetech.campsite.repository;
 
 import com.mservicetech.campsite.model.Client;
 import com.mservicetech.campsite.model.Reservation;
+import com.networknt.db.GenericDataSource;
 import com.networknt.service.SingletonServiceFactory;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.junit.jupiter.api.BeforeAll;
@@ -18,8 +19,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class CampsiteRepositoryTest {
 
-
-    private static CampsiteRepository campsiteRepository = SingletonServiceFactory.getBean(CampsiteRepository.class);
+    private static GenericDataSource genericDataSource = SingletonServiceFactory.getBean(GenericDataSource.class);
+    private static CampsiteRepository campsiteRepository = new CampsiteRepositoryImpl(genericDataSource);
 
     private static  Client client;
     private static Reservation reservation;

@@ -24,10 +24,10 @@ public class MybatisConfigTest {
     public void testConfigValues() {
         assertNotNull(mybatisConfig.getMapperPackage());
         Map<String, String> nameAliases = mybatisConfig.getNameAliases();
-        assertNull(nameAliases);
+        assertNotNull(nameAliases);
         Map<String, String> resultMappings = mybatisConfig.getResultMappings();
-        assertNull(resultMappings);
+        assertNotNull(resultMappings);
         Map<String, String> sqlSource = mybatisConfig.getSqlSource();
-        assertNull(sqlSource);
+        assertNotNull(sqlSource);
     }
 }

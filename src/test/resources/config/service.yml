@@ -10,7 +10,7 @@ singletons:
   - com.mservicetech.mybatis.MybatisSessionManager:
       - com.mservicetech.mybatis.MybatisSessionManagerImpl
   - com.mservicetech.campsite.repository.CampsiteRepository:
-      - com.mservicetech.campsite.repository.CampsiteRepositoryImpl
+      - com.mservicetech.campsite.repository.CampsiteRepositoryLightImpl
 
   # StartupHookProvider implementations, there are one to many and they are called in the same sequence defined.
   - com.networknt.server.StartupHookProvider:

@@ -6,3 +6,37 @@ server.environment: dev
 
 mybatis.registerAliases: com.mservicetech.campsite.model
 mybatis.mapperPackage: com.mservicetech.campsite.mapper
+mybatis.nameAliases:
+    selectClientById: com.mservicetech.campsite.mapper.CampsiteLightMapper.selectClientById
+
+mybatis.resultMappings:
+  reservationResult: |
+    <resultMap type="Reservation">
+       <id property="id" column="ID"/>
+       <association property="client" column="client_id" javaType="Client" select="selectClientById">
+       </association>
+       <result property="arrival" column="arrival_date"/>
+       <result property="departure" column="departure_date"/>
+    </resultMap>
+  clientResult: |
+    <resultMap type="Client" trim="true">
+       <id property="id" column="ID"/>
+       <result property="email" column="EMAIL"/>
+       <result property="name" column="FULL_NAME"/>
+    </resultMap>
+
+mybatis.sqlSource:
+    updateReservation: UPDATE reservation SET arrival_date= @{arrival} , departure_date= '@{departure}' WHERE id = '@{id}'
+    deleteReservation: UPDATE reservation SET status= 'Inactive'  WHERE id = '@{reservationId}'
+    selectReservation: SELECT id, client_id, arrival_date, departure_date FROM reservation WHERE id = '@{id}' and status = 'Active'
+    insertReservation: INSERT INTO reservation(id, client_id, arrival_date,  departure_date) VALUES ('@{id}', @{client_id}, '@{arrivalDate}', '@{departureDate}')
+    deleteReservedDates:  |
+        <script>
+          DELETE FROM reserved WHERE reserved_date IN
+          <foreach collection="items" item="item" separator="," open="(" close=")">'@{item}'></foreach>
+        </script>
+    verifyReserveDates:  |
+        <script>
+          SELECT reserved_date FROM reserved WHERE reserved_date IN
+          <foreach collection="items" item="item" separator="," open="(" close=")">'@{item}'></foreach>
+        </script>

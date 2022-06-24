@@ -50,6 +50,7 @@ public class ResultMapBuilder extends BaseBuilder {
         };
         try {
             this.typeHandlerField = ResultMapping.class.getDeclaredField("typeHandler");
+            this.typeHandlerField.setAccessible(true);
         }catch (Throwable e) {
             logger.warn("There is no typeHanlder field for the ResultMapping");
         }
@@ -193,7 +194,7 @@ public class ResultMapBuilder extends BaseBuilder {
     }
 
     private  String processNestedResultMappings(String id, XNode context, List<ResultMapping> resultMappings, Class<?> enclosingType) {
-        if (Arrays.asList("association", "collection", "case").contains(context.getName()) && context.getStringAttribute("select") !=null) {
+        if (Arrays.asList("association", "collection", "case").contains(context.getName()) && context.getStringAttribute("select") ==null) {
             validateCollection(context, enclosingType);
             ResultMap resultMap = processResultMapElement(()->getNestedMapping(id, context), context, resultMappings, enclosingType);
             return resultMap.getId();

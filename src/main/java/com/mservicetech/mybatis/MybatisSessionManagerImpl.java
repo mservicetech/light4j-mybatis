@@ -32,7 +32,7 @@ public class MybatisSessionManagerImpl implements MybatisSessionManager{
         TransactionFactory transactionFactory = new JdbcTransactionFactory();
         Environment env = new Environment(Optional.ofNullable(serverConfig.getEnvironment()).orElse("dev"), transactionFactory, genericDataSource.getDataSource());
         CustomConfiguration configuration = new CustomConfiguration(env);
-
+        configuration.setDefaultSqlProviderType(DefaultSqlProviderMethodResolver.class);
         Optional.ofNullable(mybatisConfig.getRegisterAliases()).ifPresent(a-> {
            logger.info("Register type alias: {}" , a);
            configuration.getTypeAliasRegistry().registerAliases(a);

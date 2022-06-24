@@ -18,12 +18,17 @@ import org.apache.ibatis.type.JdbcType;
 import org.apache.ibatis.type.TypeHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.w3c.dom.Node;
+
 
 import java.lang.reflect.Field;
 import java.util.*;
 import java.util.function.Supplier;
 
+/**
+ * ResultMap Builder
+ * It build resultMap from extended yaml config file (mybatis/values yaml)
+ *
+ */
 public class ResultMapBuilder extends BaseBuilder {
 
     private final MapperBuilderAssistant builderAssistant;

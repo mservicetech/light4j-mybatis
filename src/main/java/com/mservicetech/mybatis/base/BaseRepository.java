@@ -7,6 +7,11 @@ import org.apache.ibatis.session.SqlSessionFactory;
 
 import java.util.Objects;
 
+/**
+ * Base Repository(DAO) class which provide execution entry point for executing mybatis session
+ *
+ * @author Gavin Chen
+ */
 public abstract class BaseRepository {
 
     protected MybatisSessionManager sessionManager;

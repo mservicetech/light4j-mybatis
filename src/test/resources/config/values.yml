@@ -33,10 +33,10 @@ mybatis.sqlSource:
     deleteReservedDates:  |
         <script>
           DELETE FROM reserved WHERE reserved_date IN
-          <foreach collection="items" item="item" separator="," open="(" close=")">'@{item}'></foreach>
+          <foreach collection="items" item="item" separator="," open="(" close=")">'@{item}'</foreach>
         </script>
     verifyReserveDates:  |
         <script>
           SELECT reserved_date FROM reserved WHERE reserved_date IN
-          <foreach collection="items" item="item" separator="," open="(" close=")">'@{item}'></foreach>
+          <foreach collection="items" item="item" separator="," open="(" close=")">'@{item}'</foreach>
         </script>

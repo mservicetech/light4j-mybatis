@@ -1,4 +1,4 @@
-package com.mservicetech.campsite.mapper;
+package com.mservicetech.campsite.mapper.simple;
 
 import com.mservicetech.campsite.model.Client;
 import com.mservicetech.campsite.model.Reservation;

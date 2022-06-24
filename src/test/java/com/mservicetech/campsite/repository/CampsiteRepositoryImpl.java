@@ -1,7 +1,8 @@
 package com.mservicetech.campsite.repository;
 
-import com.mservicetech.campsite.mapper.CampsiteMapper;
+import com.mservicetech.campsite.mapper.simple.CampsiteMapper;
 import com.mservicetech.campsite.model.Client;
+import com.mservicetech.campsite.model.Reservation;
 import com.mservicetech.mybatis.base.SimpleBaseRepository;
 import com.networknt.db.GenericDataSource;
 import org.apache.ibatis.session.SqlSession;
@@ -14,7 +15,9 @@ public class CampsiteRepositoryImpl extends SimpleBaseRepository implements Camp
     public CampsiteRepositoryImpl(GenericDataSource genericDataSource) {
         SqlSessionFactoryConfig(genericDataSource.getDataSource());
         sqlSessionFactory.getConfiguration().getTypeAliasRegistry().registerAliases(mybatisConfig.getRegisterAliases());
-        sqlSessionFactory.getConfiguration().addMappers(mybatisConfig.getMapperPackage());
+        //For test purpose change to a new folder
+//        sqlSessionFactory.getConfiguration().addMappers(mybatisConfig.getMapperPackage());
+        sqlSessionFactory.getConfiguration().addMappers("com.mservicetech.campsite.mapper.simple");
     }
 
     @Override
@@ -44,5 +47,40 @@ public class CampsiteRepositoryImpl extends SimpleBaseRepository implements Camp
             campsiteMapper.insertClient(client);
         }
         return client.getId();
+    }
+
+    @Override
+    public int reserveDates(List<LocalDate> dateList) {
+        return 0;
+    }
+
+    @Override
+    public int deleteDates(List<LocalDate> dateList) {
+        return 0;
+    }
+
+    @Override
+    public List<LocalDate> verifyDates(List<LocalDate> dateList) {
+        return null;
+    }
+
+    @Override
+    public String createReservation(Reservation reservation) {
+        return null;
+    }
+
+    @Override
+    public Reservation getReservation(String reservationId) {
+        return null;
+    }
+
+    @Override
+    public int deleteReservation(Reservation reservation) {
+        return 0;
+    }
+
+    @Override
+    public int updateReservation(Reservation oldReservation, Reservation reservation) {
+        return 0;
     }
 }

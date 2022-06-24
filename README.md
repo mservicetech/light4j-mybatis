@@ -1,6 +1,8 @@
 ## light4j-mybatis
 
-Common components for using mybatis in light-4j framework. 
+Common components for using mybatis in light-4j framework. It provides generate mybatis session management and multiple transactions support.
+
+With light4j-mybatis, user can select use normal mybatis query/mapping config or simple add the query/mapping config to light-4j style yaml config file (mybatis.yml or values.yml). 
 
 ### Usage by using mybatis XML base config
 
@@ -50,7 +52,54 @@ mybatis.registerAliases: com.mservicetech.campsite.model
 mybatis.mapperPackage: com.mservicetech.campsite.mapper
 ```
 
+### Usage by using mybatis mappng annotation
+
+```
+    @Insert("INSERT INTO CLIENT (FULL_NAME, EMAIL) VALUES (#{name}, #{email})")
+    @Options(useGeneratedKeys = true, keyColumn = "id")
+    int insertClient(Client client);
+
+    @Select("SELECT ID, FULL_NAME, EMAIL FROM CLIENT WHERE EMAIL = #{email}")
+    @ResultMap("clientResult")
+    Client selectClientByEmail(String email);
+```
 
 ### Usage by using light4j yaml format config
 
-//TODO
+User can use light4j yaml config file (mybatis.yml or values.yml) to config the query/result mapping, for example:
+
+```
+mybatis.resultMappings:
+  clientResult: |
+      <resultMap type="Client" trim="true">
+       <id property="id" column="ID"/>
+       <result property="email" column="EMAIL"/>
+       <result property="name" column="NAME"/>
+      </resultMap>
+  reservationResult: |
+      <resultMap type="Reservation">
+       <id property="id" column="ID"/>
+       <association property="client" column="client_id" javaType="Client" select="selectClientById">
+       </association>
+       <result property="arrival" column="arrival_date"/>
+       <result property="departure" column="departure_date"/>
+      </resultMap>
+
+mybatis.sqlSource:
+    updateReservation: UPDATE reservation SET arrival_date=@{arrival}, departure_date='@{departure}' WHERE id = '@{id}'
+    deleteReservation: UPDATE reservation SET status='Inactive'  WHERE id = '@{reservationId}'
+    selectReservation: SELECT id, client_id, arrival_date, departure_date FROM reservation WHERE id = '@{id}' and status = 'Active'
+    insertReservation: INSERT INTO reservation(id, client_id, arrival_date,  departure_date) VALUES ('@{id}', @{CLIENT_id}, '@{arrivalDate}', '@{departureDate}')
+    deleteReservedDates:  |
+        <script>
+          DELETE FROM reserved WHERE reserved_date IN 
+          <foreach collection="items" item="item" separator="," open="(" close=")">'@{item}'></foreach>
+        </script>
+    verifyReserveDates:  |
+        <script>
+          SELECT reserved_date FROM reserved WHERE reserved_date IN 
+          <foreach collection="items" item="item" separator="," open="(" close=")">'@{item}'></foreach>
+        </script>
+```
+
+For the detail, please refer the code in the test package.
